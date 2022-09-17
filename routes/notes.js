@@ -2,8 +2,7 @@ const notes = require('express').Router();
 const { v4: uuidv4 } = require('uuid');
 const {
     readFromFile,
-    readAndAppend,
-    writeToFile
+    readAndAppend
 } = require('../helpers/fsUtils');
 
 notes.get('/', (req, res) =>
@@ -23,12 +22,15 @@ notes.post('/', (req, res) => {
         const newNote = {
             title,
             text,
-            id: uuidv4(),
+            id: uuidv4(), // Gives a unique id to each note
         };
 
         readAndAppend(newNote, './db/db.json');
 
         console.log("Successfully added new note")
+
+        // Give the index.js the JSON it's been waiting for
+        res.json(JSON.stringify(newNote));
     }
     else {
         console.log("Error in posting new note");
