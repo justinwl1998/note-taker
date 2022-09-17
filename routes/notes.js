@@ -2,7 +2,8 @@ const notes = require('express').Router();
 const { v4: uuidv4 } = require('uuid');
 const {
     readFromFile,
-    readAndAppend
+    readAndAppend,
+    writeToFile
 } = require('../helpers/fsUtils');
 
 notes.get('/', (req, res) =>
@@ -10,13 +11,7 @@ notes.get('/', (req, res) =>
 );
 
 notes.post('/', (req, res) => {
-    console.log(req.body);
-
     const { title, text } = req.body;
-
-    console.log(title)
-    console.log(text)
-    console.log(uuidv4())
 
     if (req.body) {
         const newNote = {
@@ -35,9 +30,20 @@ notes.post('/', (req, res) => {
     else {
         console.log("Error in posting new note");
     }
+});
 
+notes.delete('/:id', (req, res) => {
+    const noteId = req.params.id;
 
+    readFromFile('./db/db.json')
+        .then((data) => JSON.parse(data))
+        .then((json) => {
+            const result = json.filter((note) => note.id !== noteId);
 
+            writeToFile('./db/db.json', result);
+
+            res.json(`Note ID ${noteId} has been deleted`)
+        })
 });
 
 module.exports = notes;
