@@ -16,7 +16,7 @@ A Node.js server where the user can write, save, edit and delete notes for note 
 
 ## Preview
 
-
+![Website preview](/assets/preview.png)
 
 ## Author
 
