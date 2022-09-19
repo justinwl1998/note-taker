@@ -18,6 +18,8 @@ A Node.js server where the user can write, save, edit and delete notes for note 
 
 ![Website preview](/assets/preview.png)
 
+View the live app [here.](https://nameless-dusk-97199.herokuapp.com)
+
 ## Author
 
 Created by Justin Liu.
